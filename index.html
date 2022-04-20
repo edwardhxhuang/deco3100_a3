@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trump's Twitter Tendencies</title>
+    <!-- Install tailwind via cdn to make styling simpler. -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/@tailwindcss/typography@0.2.x/dist/typography.min.css"
+        />
+    <!-- Plotly and regression libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/regression/2.0.1/regression.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Animate on Scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <div class="w-full bg-cover bg-center" style="height:32rem; background-image: url(https://www.gannett-cdn.com/presto/2019/08/15/PMJS/34827809-62f8-461d-ad05-3eb8c8136020-MJS_APC_Trump_Rally_0959_042719_wag.jpg);">
+        <div class="flex items-center justify-center h-full w-full bg-gray-900 bg-opacity-50">
+            <div class="text-center">
+                <h1 class="text-5xl py-4 font-bold text-white">Trump's Twitter Tendencies</h1>
+                <h2 class="text-2xl text-white italic">A data-based visual analysis of Donald Trump's tweets as President</h2>
+                <div class="text-base text-white py-6"><h3>By <b>Edward Huang</b></h3>
+                    <h3 class="text-base text-white">June 14, 2021</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</head>
+<body>
+    <div class="pt-16 prose prose-sm sm:prose lg:prose-lg mx-auto">
+        <p>Donald Trump is undoubtedly one of, if not the most controversial US president of all time. Trump's unmoderated social media presence on Twitter attracted worldwide attention as a constant source of simultaneous controversy, comedy, and insanity; and it likely will be remembered as a key part of his presidential legacy. This article explores some of the underlying trends in his usage of Twitter through text mining and sentiment analysis techniques,and what it says about his behaviour, strategy, and competancy.</p>
+        <h2>Which States were most tweeted about?</h2>
+        <p>The three states mentioned the most by Trump on Twitter during his presidential term - New York, Florida, Pennsylvania, and Texas (over 220+ mentions) - are unsurprisingly four of the top five most populous states in the US. Similarly, out of the least mentioned states, only two states have populations greater than 2 million. Two states on the least mentioned list, Wyoming and Idaho (both considered rural states), were comfortably won by Trump in the 2020 election. The rest of them, including the two larger states, Washington and Oregon, were all lost to Biden. This perhaps suggests that Trump felt those smaller states were not worth fighting for.</p>
+        <div>
+            <h4>Total Mentions of US States by Donald Trump on Twitter</h4>
+            View: <select class="bg-gray-100 border border-gray-300 rounded-lg py-3 px-4" id="barChartSelector">
+                <option value="most">Most Mentioned</option>
+                <option value="least">Least Mentioned</option>
+            </select>
+        </div>
+        <div data-aos="fade-right" id='states-bar'></div>
+        <p>* Only tweets with the words "Washington State" were counted to avoid confusion with the US Capital in D.C</p>
+        <p>Interestingly, California - the US state with the largest population and most electoral votes with 55 - only ranked as the 7th most mentioned. A potential reason for this is due to California generally being considered a 'safe blue state', having voted Democratic in every election since 1992. It could be that Trump saw it as a battleground he was unlikely to win, and therefore gave it less of his social media effort and attention. Aside from California and New York (which may also have skewed results due to mentions of New York media outlets), the other top mentioned states he either won (Florida and Texas) or it was a relatively tight race with an average vote difference of 1.4%.</p>
+        <img src="images/goingtohell.png">
+        <p>In order to more fairly assess which states Trump prioritised in his twitter social media strategy, mentions of each state were averaged out according to the amount of electoral votes per state to negate the disproportionate effect of population size. In addition, all of Trump's tweets were run through a sentiment analysis algorithm to give an approximate indication of which states he tended to tweet more positively or negatively about.
+        </p>
+        <h4>Mapping Trump's Twitter Usage</h4>
+        <select class="bg-gray-100 border border-gray-300 rounded-lg py-3 px-4" id="mapSelector">
+            <option class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" value="mentions">Mentions of US States per Electoral Vote</option>
+            <option class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" value="sentiment">Average Tweet Sentiment per US State</option>
+        </select>
+         <input class="bg-transparent hover:bg-gray-600 text-gray-800 hover:text-white py-2 px-4 border border-gray-600 hover:border-transparent rounded" type="button" onclick="colourToggle()" value="Colourblind Mode: Off" id="colourblind">
+    </div>
+
+        <div class="flex justify-center">
+            <div class= "w-4/5" data-aos="fade-right" id='states'></div>
+        </div>
+
+    <div class="py-12 prose prose-sm sm:prose lg:prose-lg mx-auto">
+        <p>The states with the highest ratio of tweet mentions to electoral votes (Wisconsin, Iowa, Pennsylvania, and Georgia) were all considered key swingstates in the leadup to the 2020 election. Their importance in deciding the election result are likely the motivation behind the high frequency of mentions by Trump.
+        </p>
+        <p>The average sentiment score across all the states was 0.22, suggesting his tweets were generally positive across the board. By exploring the context of the highest and lowest scoring states in more detail, we can start to see why this was the case. It becomes clear which states he had a strong relationship with, which regions he was attempting to court favour with, and the states he clearly disliked or had little regard for.</p>
+        <h4>Highest Sentiment States</h4>
+        <p>All of these states were won by Trump in 2016 and ultimately in 2020. They are states from which he had strong support and are historically red states, having all voted Republican since 2000. Therefore, it's clear why he was more positive when they were mentioned.</p>
+        <ul>
+            <li>Arkansas (0.40)</li>
+            <li>Nebraska (0.35)</li>
+            <li>Kansas (0.34)</li>
+            <li>Utah (0.33)</li>
+        </ul>
+        <h2>
+            Trump's Presidential Lexicon
+        </h2>
+        <p>
+            The graph shows 19 commonly used words by Trump on Twitter during his presidency that have a high level of negative sentiment and connotations of corruption and illegality. These words are a part of a larger list of comparable words that can be used to track and assess Trump's level of "anti-establishment" anger, resentment of the media, and general frustration throughout his presidency. In total, there were 2674 tweets that include at least one of these words out of the 16716 tweets made during his presidential term - over 15% of his tweets feature this negative language. In comparison, Obama mentioned these words in his presidential tweets a total of 19 times and at a negligible rate of 0.003%.
+        </p>
+        <h4>Negative Vocabulary Frequency</h4>
+        <div data-aos="fade-up" id="radar"></div>
+        <p>By mapping the frequency of these negative and corruption alleging tweets, it's clear the months that featured the most of these tweets coincided with important key moments during his presidency. The early peaks are centred around the Special Counsel Investigation that culmintated in the Mueller Report which was an investigation into potential collusion between Trump and Russia in the 2016 election. The contents of these tweets can be explored in the interactive tweet cluster map below. A continual theme throughout is Trump's labeling of the media as 'fake news'. There is also an increase in these negative sentiment tweets in May 2020, when he comes under fire for his response to the COVID-19 pandemic. The final peak aligns with the 2020 Presidential Election where he infamously claimed victory and electoral fraud despite defeat.</p>
+        <h4>Frequency of Usage over Presidential Term</h4>
+        <div data-aos="fade-up" id="lineChart"></div>
+        <h4 class="text-blue-800" id="selectedDate">Loading...</h4>
+        <p>Click a point on the line graph to view tweet cluster.</p>
+    </div>
+        <div class="flex justify-center">
+            <div  class= "w-4/5" data-aos="fade-right" id='cluster'></div>
+        </div>
+        
+    <div class="pt-12 prose prose-sm sm:prose lg:prose-lg mx-auto">
+        <h3>References</h3>
+        <ul>
+            <li>Live election results: The 2020 presidential race. (2020). Politico. https://www.politico.com/2020-election/results/president/</li>
+            <li>Trump Rally. (2019). [Photograph]. https://www.gannett-cdn.com/presto/2019/08/15/PMJS/34827809-62f8-461d-ad05-3eb8c8136020-MJS_APC_Trump_Rally_0959_042719_wag.jpg</li>
+            <li>Wikipedia contributors. (2021a, May 12). Special Counsel investigation (2017–2019). Wikipedia. https://en.wikipedia.org/wiki/Special_Counsel_investigation_(2017%E2%80%932019)</li>
+            <li>Wikipedia contributors. (2021, June 9). Red states and blue states. Wikipedia. https://en.wikipedia.org/wiki/Red_states_and_blue_states</li>
+        </ul>
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://stevenlevithan.com/assets/misc/date.format.js"></script>
+    <script src='charts.js'></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
