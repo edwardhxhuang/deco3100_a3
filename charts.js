@@ -469,10 +469,10 @@ function convertToParagraph(sentence, maxLineLength){
 
 function runPlotly(filters) {
   const {barChart, cluster, map} = filters
-  Plotly.d3.csv("data/trump_presidential_tweets.csv", (trump_tweets) => {
-    Plotly.d3.csv("data/presidential_vocabulary.csv", (vocab) => {
-      Plotly.d3.csv("data/tsne_and_cluster/tsne_data_trump.csv", (tsne_data_trump) => {
-        Plotly.d3.csv('data/states.csv', (state_data) => {
+  Plotly.d3.csv("https://raw.githubusercontent.com/edwardhxhuang/deco3100_a3/main/data/trump_presidential_tweets.csv", (trump_tweets) => {
+    Plotly.d3.csv("https://raw.githubusercontent.com/edwardhxhuang/deco3100_a3/main/data/presidential_vocabulary.csv", (vocab) => {
+      Plotly.d3.csv("https://raw.githubusercontent.com/edwardhxhuang/deco3100_a3/main/data/tsne_and_cluster/tsne_data_trump.csv", (tsne_data_trump) => {
+        Plotly.d3.csv('https://raw.githubusercontent.com/edwardhxhuang/deco3100_a3/main/data/states.csv', (state_data) => {
           let tweets = corruption_filter(trump_tweets, tsne_data_trump)
           let topVocab = filter_vocab(vocab);
           if (barChart) {
